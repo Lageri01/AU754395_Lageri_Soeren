@@ -1,11 +1,13 @@
 ---
 title: "Danish Kings."
 author: "Søren L.F. Lageri"
-date: "2026-03-06"
+date: "2026-03-13"
 output:
   html_document: default
   pdf_document: default
 ---
+
+##### Link to GitHub repository: https://github.com/Digital-Methods-HASS/AU754395_Lageri_Soeren
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -82,7 +84,6 @@ Generally, when working with the column, the columns remain the same but a tibbl
 ##### 4. Show the dataset so that we can see how R interprets each column
 
 ```{r kings, eval = TRUE}
-# COMPLETE THE BLANKS BELOW WITH YOUR CODE, then turn the 'eval' flag in this chunk to TRUE.
 
 kings_list <- list( # Here we define a list for the four loaded datasets.
   kings1 = kings1,
@@ -127,7 +128,6 @@ You can calculate the duration of reign in years with `mutate` function by subtr
 Create a new column called  `duration` in the kings dataset, utilizing the `mutate()` function from tidyverse. Check with your group to brainstorm the options.
 
 ```{r reign}
-# YOUR CODE
 
 # Column 10 is Era_start and column 11 is Era_finished.
 
@@ -142,7 +142,7 @@ Reign_duration <- kings4 %>% # A pipe (%>%) is used to combine multiple function
 # The duration column is placed at 12 and has 57 values.
 Reign_duration[12]
 
-#Reign_duration["Reign_duration"] # Can also be used but Works best for one column.
+#Reign_duration["Reign_duration"] # Can also be used but works best for one column.
 ```
 
 ## Calculate the average duration of reign for all rulers
@@ -155,12 +155,10 @@ Do you remember how to calculate an average on a vector object? If not, review t
 
 
 ```{r average reign duration base R}
-# YOUR CODE
-
 Average_reign_duration_baseR <- 
   mean(as.numeric(Reign_duration$Reign_duration),na.rm = TRUE)
 
-cat("Base-R mean:",round(Average_reign_duration_baseR,digits=1),"\n") # We round it to two digits.
+cat("Base-R mean:",round(Average_reign_duration_baseR,digits=1),"\n") # We round it to one digit.
  # cat functions do not work with pipes, so we type it separately
 ```
 
@@ -180,11 +178,10 @@ The average duration of the rulers was `r round(Average_reign_duration[1,1],1)` 
 You have calculated the average duration above. Use it now to `filter()` the `duration` column in  `kings` dataset. Display the result and also  count the resulting rows with `count()`
 
 ```{r longer_than_avg_reign}
-# YOUR CODE
-
 longer_than_avg_reigns <- Reign_duration %>% # We use the pipe to push it
   filter(Reign_duration > Average_reign_duration$avg_duration) %>% 
-  select(Name,Era_start,Era_finished,Reign_duration)
+  select(Name,Era_start,Era_finished,Reign_duration) # We select the four columns
+
 # $ extracts the avg_duration column from the Average_rule_duration tibble.
 
 longer_than_avg_reigns
@@ -202,8 +199,6 @@ There are `r count(longer_than_avg_reigns)` kings who had a longer-than-average 
 * BONUS: consider the transition year (with 366 days) in your calculation!
 
 ```{r three longest reigns sorted and converted}
-# YOUR CODE
-
 sorted_kings <- Reign_duration %>% # First we sort the reign duration. 
   arrange(desc(Reign_duration)) # We arrange it in descending order with biggest to smallest.
 
@@ -249,8 +244,6 @@ What is the long-term trend in the duration of reign among Danish monarchs? How 
 * BONUS: add a title, nice axis labels to the plot and make the theme B&W and font bigger to make it nice and legible!
 
 ```{r bonus plot}
-# YOUR CODE
-
 midyear_Reign <- Reign_duration %>% 
   mutate(midyear = Era_start + (Era_finished-Era_start)/2)
 

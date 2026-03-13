@@ -11,7 +11,7 @@
 
 <meta name="author" content="Søren L.F. Lageri" />
 
-<meta name="date" content="2026-03-06" />
+<meta name="date" content="2026-03-13" />
 
 <title>Danish Kings.</title>
 
@@ -352,11 +352,13 @@ display: none;
 
 <h1 class="title toc-ignore">Danish Kings.</h1>
 <h4 class="author">Søren L.F. Lageri</h4>
-<h4 class="date">2026-03-06</h4>
+<h4 class="date">2026-03-13</h4>
 
 </div>
 
 
+<div id="link-to-github-repository-httpsgithub.comdigital-methods-hassau754395_lageri_soeren" class="section level5">
+<h5>Link to GitHub repository: <a href="https://github.com/Digital-Methods-HASS/AU754395_Lageri_Soeren" class="uri">https://github.com/Digital-Methods-HASS/AU754395_Lageri_Soeren</a></h5>
 <p>Here we load the <code>tidyverse</code> library and its packages.</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
@@ -373,6 +375,7 @@ display: none;
 <code>tidyverse</code> toolkit, calculate and explore the kings’
 duration of reign with pipes <code>%&gt;%</code> in <code>dplyr</code>
 and plot it over time.</p>
+</div>
 <div id="load-the-kings" class="section level2">
 <h2>Load the kings</h2>
 <p>Make sure to first create an <code>.Rproj</code> workspace with a
@@ -473,9 +476,7 @@ from it. Therefore, for our case we will stay with tibbles.</p>
 <div id="show-the-dataset-so-that-we-can-see-how-r-interprets-each-column" class="section level5">
 <h5>4. Show the dataset so that we can see how R interprets each
 column</h5>
-<pre class="r"><code># COMPLETE THE BLANKS BELOW WITH YOUR CODE, then turn the &#39;eval&#39; flag in this chunk to TRUE.
-
-kings_list &lt;- list( # Here we define a list for the four loaded datasets.
+<pre class="r"><code>kings_list &lt;- list( # Here we define a list for the four loaded datasets.
   kings1 = kings1,
   kings2 = kings2,
   kings3 = kings3,
@@ -561,9 +562,7 @@ strategy to deal with them: <code>na.omit()</code>,
 <p>Create a new column called <code>duration</code> in the kings
 dataset, utilizing the <code>mutate()</code> function from tidyverse.
 Check with your group to brainstorm the options.</p>
-<pre class="r"><code># YOUR CODE
-
-# Column 10 is Era_start and column 11 is Era_finished.
+<pre class="r"><code># Column 10 is Era_start and column 11 is Era_finished.
 
 # We want to define a new column that subtracts the end of the era with the start.
 # We want to keep rows where Era_start has no NA OR Era_finished has no NA. 
@@ -589,7 +588,7 @@ Reign_duration[12]</code></pre>
 ##  9              6
 ## 10              6
 ## # ℹ 47 more rows</code></pre>
-<pre class="r"><code>#Reign_duration[&quot;Reign_duration&quot;] # Can also be used but Works best for one column.</code></pre>
+<pre class="r"><code>#Reign_duration[&quot;Reign_duration&quot;] # Can also be used but works best for one column.</code></pre>
 </div>
 <div id="calculate-the-average-duration-of-reign-for-all-rulers" class="section level2">
 <h2>Calculate the average duration of reign for all rulers</h2>
@@ -610,12 +609,10 @@ The <code>mean()</code> function can only be run on a vector. The
 Coerce your data to numbers with <code>as.numeric()</code>.</li>
 <li>Remember to handle NAs: <code>mean(X, na.rm=TRUE)</code></li>
 </ul>
-<pre class="r"><code># YOUR CODE
-
-Average_reign_duration_baseR &lt;- 
+<pre class="r"><code>Average_reign_duration_baseR &lt;- 
   mean(as.numeric(Reign_duration$Reign_duration),na.rm = TRUE)
 
-cat(&quot;Base-R mean:&quot;,round(Average_reign_duration_baseR,digits=1),&quot;\n&quot;) # We round it to two digits.</code></pre>
+cat(&quot;Base-R mean:&quot;,round(Average_reign_duration_baseR,digits=1),&quot;\n&quot;) # We round it to one digit.</code></pre>
 <pre><code>## Base-R mean: 19.3</code></pre>
 <pre class="r"><code> # cat functions do not work with pipes, so we type it separately</code></pre>
 <pre class="r"><code># We take the mean of the duration of the reigns and remove NA.
@@ -637,11 +634,10 @@ reign?</h2>
 <code>filter()</code> the <code>duration</code> column in
 <code>kings</code> dataset. Display the result and also count the
 resulting rows with <code>count()</code></p>
-<pre class="r"><code># YOUR CODE
-
-longer_than_avg_reigns &lt;- Reign_duration %&gt;% # We use the pipe to push it
+<pre class="r"><code>longer_than_avg_reigns &lt;- Reign_duration %&gt;% # We use the pipe to push it
   filter(Reign_duration &gt; Average_reign_duration$avg_duration) %&gt;% 
-  select(Name,Era_start,Era_finished,Reign_duration)
+  select(Name,Era_start,Era_finished,Reign_duration) # We select the four columns
+
 # $ extracts the avg_duration column from the Average_rule_duration tibble.
 
 longer_than_avg_reigns</code></pre>
@@ -678,9 +674,7 @@ you calculate the total number of days they ruled</li>
 <li>BONUS: consider the transition year (with 366 days) in your
 calculation!</li>
 </ul>
-<pre class="r"><code># YOUR CODE
-
-sorted_kings &lt;- Reign_duration %&gt;% # First we sort the reign duration. 
+<pre class="r"><code>sorted_kings &lt;- Reign_duration %&gt;% # First we sort the reign duration. 
   arrange(desc(Reign_duration)) # We arrange it in descending order with biggest to smallest.
 
 three_longest_reigns &lt;- sorted_kings %&gt;%  # Now having them sorted we want the first three.
@@ -740,9 +734,7 @@ along the x axis and <code>duration</code> along y axis</li>
 <li>BONUS: add a title, nice axis labels to the plot and make the theme
 B&amp;W and font bigger to make it nice and legible!</li>
 </ul>
-<pre class="r"><code># YOUR CODE
-
-midyear_Reign &lt;- Reign_duration %&gt;% 
+<pre class="r"><code>midyear_Reign &lt;- Reign_duration %&gt;% 
   mutate(midyear = Era_start + (Era_finished-Era_start)/2)
 
 #midyear_definition[10:13]
